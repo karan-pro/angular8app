@@ -1,0 +1,93 @@
+<form #employeeForm="ngForm" (ngSubmit)="saveEmployee(employeeForm)">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="panel-title">
+            <h3>Create Employee</h3>
+        </div></div>
+        <div class="panel-body">
+            <div class="form-group" [class.has-success]="name.valid" [class.has-error]="name.invalid && name.touched">
+                <label for="name" class="control-label">Full Name</label>
+                <input id='name' required name="name"  [(ngModel)]="employee.name" #name="ngModel" 
+                type="text" class="form-control">
+            <span class="help-block" *ngIf="name.invalid && name.touched">Name is required</span>
+            </div>
+         
+            <div class="form-group" [class.has-error]="email.invalid && email.touched">
+                <label for="email" class="control-label">Email</label>
+                <input id="email" required email type="text" name="email" [(ngModel)]="employee.email" 
+                class="form-control" #email="ngModel">
+                <span class="help-block" *ngIf="email.errors?.required && email.touched">
+                    Email is required
+                </span>
+                <span class="help-block" *ngIf="email.errors?.email && email.touched">
+                    Email is invalid
+                </span>
+            </div>
+        <div class="form-group">
+            <label>Contact Preference</label>
+            <div class="form-control">
+                <label class="radio-inline">
+              <input type="radio" name="contactPreference" [(ngModel)]="employee.contactPreference" value="email">Email</label>
+              <label class='radio-inline'>
+                  <input type="radio" name="contactPreference" [(ngModel)]="employee.contactPreference" value="Phone">
+                  Phone
+              </label>
+            </div>
+        </div>
+        
+    <div class="form-group">
+        <label>Gender</label>
+        <div class="form-control">
+            <label class='radio-inline'>
+            <input type="radio" name='gender' [(ngModel)]='employee.gender' value="Male">
+            Male
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name='gender' [(ngModel)]='employee.gender' value="female">Female</label>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="form-control">
+        <label class="checkbox-inline"><input type="checkbox" name="isActive" 
+            [(ngModel)]="employee.isActive"> Is Active</label>
+    </div></div>
+    <div class="form-group">
+        <label for="department">Department</label>
+        <select id="department" name="department" 
+        [(ngModel)]="employee.department" class="form-control">
+            <option *ngFor='let dept of departments' 
+            [value]="dept.id">
+                {{dept.name}}</option> 
+        </select>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+    <div class="form-group">
+    <label for="dateofBirth">Date Of Birth</label>
+    <input id="dateofBirth" name="dateofBirth" [(ngModel)]=employee.dateofBirth type="text" bsDatepicker 
+    [bsConfig]="Datepickerconfig" class="form-control">
+    </div></div>
+        </div>
+    <div class="form-group">
+        <label for="path">Photo Path</label>
+        <input type="text" id="path" name="path" 
+        [(ngModel)]="employee.photoPath" class="form-control">
+    </div>
+    <div class="form-group">
+        <button type="button" (click)="togglephotopreview()" class="btn btn-primary">Show Preview</button>
+    </div>
+    <div class="form-group">
+        <img [src]="employee.photoPath" height="200" width="200" *ngIf="previewphoto"/>
+    </div>
+    
+        </div>
+    
+        <div class="panel-footer">
+            <button type="submit" class="btn btn-primary" [disabled]="employeeForm.invalid">Save</button>
+        
+    </div>
+    </div>
+    
+    </form>
+    
+    Angular Auto-Generated Form Model:: {{employeeForm.value | json}}
